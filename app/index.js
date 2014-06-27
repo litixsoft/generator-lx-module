@@ -25,7 +25,6 @@ function nameIsAvailableOnBower (name, callback) {
 
 module.exports = yeoman.generators.Base.extend({
     initializing: function () {
-//        this.pkg = require('../package.json');
         this.log(this.yeoman);
     },
 
@@ -42,14 +41,12 @@ module.exports = yeoman.generators.Base.extend({
                         'bower',
                         'both'
                     ],
-                    default: 'npm'
+                    default: 'bower'
                 }
             ];
 
             this.prompt(prompts, function (answers) {
                 // save package type
-//                this.isNpmPackage = answers.packageTypes.indexOf('npm') > -1;
-//                this.isBowerPackage = answers.packageTypes.indexOf('bower') > -1;
                 this.isNpmPackage = answers.packageTypes === 'npm' || answers.packageTypes === 'both';
                 this.isBowerPackage = answers.packageTypes === 'bower' || answers.packageTypes === 'both';
 
@@ -103,6 +100,7 @@ module.exports = yeoman.generators.Base.extend({
                     return this.prompting.promptingName.bind(this)();
                 }
 
+                this.name = answers.name;
                 this.slugname = this._.slugify(answers.name);
                 this.safeSlugname = this.slugname.replace(
                     /-+([a-zA-Z0-9])/g,
@@ -161,7 +159,7 @@ module.exports = yeoman.generators.Base.extend({
                     type: 'confirm',
                     default: true,
                     when: function () {
-                        return self.isBowerPackage;
+                        return self.isBowerPackage && !self.isNpmPackage;
                     }
                 },
                 {
@@ -170,7 +168,7 @@ module.exports = yeoman.generators.Base.extend({
                     type: 'confirm',
                     default: true,
                     when: function () {
-                        return self.isBowerPackage;
+                        return self.isBowerPackage && !self.isNpmPackage;
                     }
                 }
             ];
@@ -197,6 +195,7 @@ module.exports = yeoman.generators.Base.extend({
             }.bind(this));
         }
     },
+
     configuring: function () {
         this.copy('editorconfig', '.editorconfig');
         this.copy('gitattributes', '.gitattributes');
@@ -213,6 +212,7 @@ module.exports = yeoman.generators.Base.extend({
             this.template('_bower.json', 'bower.json');
             this.template('bowerrc', '.bowerrc');
         }
+
         if (this.isNpmPackage) {
             this.copy('npmignore', '.npmignore');
         }
@@ -224,15 +224,31 @@ module.exports = yeoman.generators.Base.extend({
     },
 
     writing: function () {
-        this.mkdir('lib');
-        this.template('lib/lib.js', 'lib/' + this.slugname + '.js');
+        if (this.isBowerPackage && !this.isNpmPackage) {
+            this.mkdir('src');
+            this.template('lib/_bower.lib.js', 'src/' + this.slugname + '.js');
+        } else {
+            this.mkdir('lib');
+            this.template('lib/_lib.js', 'lib/' + this.slugname + '.js');
+        }
+
         this.mkdir('test');
-        this.template('test/lib.spec.js', 'test/' + this.slugname + '.spec.js');
+
+        if (this.props.useKarma) {
+            this.template('test/_karma.conf.js', 'test/karma.conf.js');
+            this.template('test/_karma.coverage.conf.js', 'test/karma.coverage.conf.js');
+            this.template('test/_karma.webstorm.conf.js', 'test/karma.webstorm.conf.js');
+            this.template('test/_karma.spec.js', 'test/' + this.slugname + '.spec.js');
+        } else {
+            if (this.isNpmPackage) {
+                this.template('test/_lib.spec.js', 'test/' + this.slugname + '.spec.js');
+            }
+        }
     },
 
     install: function () {
-//        this.installDependencies({
-//            skipInstall: this.options['skip-install']
-//        });
+        this.installDependencies({
+            skipInstall: this.options['skip-install']
+        });
     }
 });

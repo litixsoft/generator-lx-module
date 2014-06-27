@@ -6,21 +6,20 @@ module.exports = function (config) {
         basePath: '../',
 
         // testing framework to use (jasmine/mocha/qunit/...)
-        frameworks: ['jasmine', 'detectBrowsers'],
+        frameworks: ['jasmine'],
 
         // list of files / patterns to load in the browser
         files: [<% if (props.useAngular) { %>
             'bower_components/angular/angular.js',
             'bower_components/angular-mocks/angular-mocks.js',<% } %>
-            'test/mocks/appMocks.js',
-            'modules/navigation/navigation.js',
-            'modules/**/*.js'
+            'src/**/*.js',
+            'test/**/*.spec.js'
         ],
 
         // use dots reporter, as travis terminal does not support escaping sequences
         // possible values: 'dots', 'progress'
         // CLI --reporters progress
-        reporters: ['mocha'],
+        reporters: [],
 
         // web server port
         // CLI --port 9876
@@ -28,7 +27,7 @@ module.exports = function (config) {
 
         // enable / disable colors in the output (reporters and logs)
         // CLI --colors --no-colors
-        colors: true,
+        colors: false,
 
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
@@ -48,7 +47,7 @@ module.exports = function (config) {
         // - PhantomJS
         // - IE (only Windows)
         // CLI --browsers Chrome,Firefox,Safari
-        browsers: [process.env.TRAVIS ? 'Firefox' : 'Chrome'],
+        browsers: ['Chrome'],
 
         // If browser does not capture in given timeout [ms], kill it
         // CLI --capture-timeout 5000
@@ -56,22 +55,10 @@ module.exports = function (config) {
 
         // Auto run tests on start (when browsers are captured) and exit
         // CLI --single-run --no-single-run
-        singleRun: true,
+        singleRun: false,
 
         // report which specs are slower than 500ms
         // CLI --report-slower-than 500
-        reportSlowerThan: 500,
-
-        plugins: [
-            'karma-jasmine',
-            'karma-chrome-launcher',
-            'karma-firefox-launcher',
-            'karma-ie-launcher',
-            'karma-safari-launcher',
-            'karma-phantomjs-launcher',
-            'karma-detect-browsers',
-            'karma-mocha-reporter',
-            'karma-junit-reporter'
-        ]
+        reportSlowerThan: 500
     });
 };

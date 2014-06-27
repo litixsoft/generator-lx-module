@@ -9,6 +9,7 @@
 
 ## Testing
 ### Install global dependencies
+
     $ npm install -g grunt-cli <% if (isBowerPackage) { %>bower<% } %>
 
 #### Run unit tests
@@ -21,7 +22,10 @@
 
 #### Run all tests with reports for ci systems
 
-    $ grunt ci
+    $ grunt ci<% if (props.useKarma) { %>
+
+#### Run karma tests in webstorm
+You can run the karma test through webstorm. Just create a new karma run configuration and choose the config file `test/karma.webstorm.conf.js`.<% } %>
 
 ## Contributing
 Instead of us handing out a formal style guide, simply stick to the existing programming style. Please create descriptive commit messages.

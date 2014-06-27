@@ -2,27 +2,29 @@
     "name": "<%= slugname %>",
     "version": "0.0.0",
     "description": "<%= props.description %>",<% if (props.homepage) { %>
-    "homepage": "<%= props.homepage %>",<%}%>
+    "homepage": "<%= props.homepage %>",<% } %>
     "author": {
         "name": "<%= props.authorName %>",
         "email": "<%= props.authorEmail %>"<% if (props.authorUrl) { %>,
         "url": "<%= props.authorUrl %>"<% } %>
     },
-    "maintainers": [<% for (var i=0;i<maintainers.length;i++) { %>
-        "<%= maintainers[i], %>"<% } %>
+    "maintainers": [<% for (var i = 0; i < maintainers.length; i++) { %>
+        "<%= maintainers[i] %>"<% } %>
     ],
-    "license": "<%= props.license %>",<% if (props.license === "MIT") { %>
+    "license": "<%= props.license %>",
     "keywords": [
-        "<%= slugname %>"<% for (var i=0;i<keywords.length;i++) { %>,
+        "<%= slugname %>"<% for (var i = 0; i < keywords.length; i++) { %>,
         "<%= keywords[i] %>"<% } %>
     ],
+    "main": "./<%= slugname %>.js",
     "ignore": [
         ".*",
         "bower_components",
+        "build",
         "CHANGELOG.md",
         "Gruntfile.js",
         "lib",
-        "LICENSE"
+        "LICENSE",
         "node_modules",
         "package.json",
         "test",

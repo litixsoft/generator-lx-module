@@ -27,13 +27,58 @@ module.exports = function (grunt) {
     // Project configuration.
     grunt.initConfig({
         jshintFiles: ['Gruntfile.js', <% if (isNpmPackage) { %>'lib/**/*.js', 'test/**/*.js'<% } %>],
-        pkg: grunt.file.readJSON('package.json'),
+        pkg: grunt.file.readJSON('package.json'),<% if (isBowerPackage) { %>
+        banner: '/*!\n' +
+            ' * <%%= pkg.title || pkg.name %> - v<%%= pkg.version %> - <%%= grunt.template.today("yyyy-mm-dd") %>\n' +
+            '<%%= pkg.homepage ? " * " + pkg.homepage + "\\n" : "" %>' +
+            ' *\n' +
+            ' * Copyright (c) <%%= grunt.template.today("yyyy") %> <%%= pkg.author.name %>\n' +
+            ' * Licensed <%%= _.pluck(pkg.licenses, "type").join(", ") %>\n' +
+            ' */\n\n',<% } %>
         clean: {
-            jasmine: ['.reports/test'],
-            lint: ['.reports/lint'],
-            coverage: ['.reports/coverage'],
-            ci: ['.reports']
+            jasmine: ['build/reports/test'],
+            lint: ['build/reports/lint'],
+            coverage: ['build/reports/coverage'],
+            ci: ['build/reports']<% if (isBowerPackage) { %>,
+            tmp: ['.tmp']<% } %>
+        },<% if (isBowerPackage) { %>
+        concat: {
+            dist: {
+                options: {
+                    stripBanners: true
+                },
+                src: ['<% if (isNpmPackage) { %>lib<% } else { %>src<% } %>/**/*.js'],
+                dest: '<%%= pkg.name %>.js'
+            },
+            removeUseStrict: {
+                options: {
+                    banner: '<%%= banner %>\'use strict\';\n',
+                    process: function(src) {
+                        return src.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
+                    }
+                },
+                src: ['<%%= pkg.name %>.js'],
+                dest: '<%%= pkg.name %>.js'
+            }
         },
+        uglify: {
+            options: {
+                banner: '<%%= banner %>'
+            },
+            dist: {
+                src: [<% if (props.useAngular) { %>'.tmp/<%%= pkg.name %>.js'<% } else { %>'<%%= pkg.name %>.js'<% } %>],
+                dest: '<%%= pkg.name %>.min.js'
+            }
+        },<% } %><% if (props.useAngular) { %>
+        ngmin: {
+            dist: {
+                files: [
+                {
+                    src: ['<%%= pkg.name %>.js'],
+                    dest: '.tmp/<%%= pkg.name %>.js'
+                }]
+            }
+        },<% } %>
         jshint: {
             options: {
                 jshintrc: true
@@ -42,7 +87,7 @@ module.exports = function (grunt) {
             jslint: {
                 options: {
                     reporter: 'jslint',
-                    reporterOutput: '.reports/lint/jshint.xml'
+                    reporterOutput: 'build/reports/lint/jshint.xml'
                 },
                 files: {
                     src: '<%%= jshintFiles %>'
@@ -51,7 +96,7 @@ module.exports = function (grunt) {
             checkstyle: {
                 options: {
                     reporter: 'checkstyle',
-                    reporterOutput: '.reports/lint/jshint_checkstyle.xml'
+                    reporterOutput: 'build/reports/lint/jshint_checkstyle.xml'
                 },
                 files: {
                     src: '<%%= jshintFiles %>'
@@ -60,16 +105,16 @@ module.exports = function (grunt) {
         },
         bgShell: {
             coverage: {
-                cmd: 'node node_modules/istanbul/lib/cli.js cover --dir .reports/coverage node_modules/grunt-jasmine-node/node_modules/jasmine-node/bin/jasmine-node -- test --forceexit'
+                cmd: 'node node_modules/istanbul/lib/cli.js cover --dir build/reports/coverage node_modules/grunt-jasmine-node/node_modules/jasmine-node/bin/jasmine-node -- test --forceexit'
             },
             cobertura: {
-                cmd: 'node node_modules/istanbul/lib/cli.js report --root .reports/coverage --dir .reports/coverage cobertura'
+                cmd: 'node node_modules/istanbul/lib/cli.js report --root build/reports/coverage --dir build/reports/coverage cobertura'
             }
         },
         open: {
             coverage: {
                 path: function () {
-                    return path.join(__dirname, getCoverageReport('.reports/coverage/'));
+                    return path.join(__dirname, getCoverageReport('build/reports/coverage/'));
                 }
             }
         },<% if (props.useKarma) { %>
@@ -82,7 +127,7 @@ module.exports = function (grunt) {
                 colors: false,
                 reporters: ['mocha', 'junit'],
                 junitReporter: {
-                    outputFile: '.reports/tests/<%= slugname %>.xml',
+                    outputFile: 'build/reports/tests/<%= slugname %>.xml',
                     suite: '<%= slugname %>'
                 }
             },
@@ -102,7 +147,7 @@ module.exports = function (grunt) {
                 colors: false,
                 coverageReporter: {
                     type: 'cobertura',
-                    dir: '.reports/coverage'
+                    dir: 'build/reports/coverage'
                 }
             }
         },<% } %>
@@ -117,7 +162,7 @@ module.exports = function (grunt) {
                 options: {
                     jUnit: {
                     report: true,
-                    savePath: '.reports/test/',
+                    savePath: 'build/reports/test/',
                     useDotNotation: true,
                     consolidate: true
                     }
@@ -149,7 +194,8 @@ module.exports = function (grunt) {
 
     grunt.registerTask('lint', ['jshint:test']);
     grunt.registerTask('test', ['git:commitHook', 'clean:jasmine', 'jshint:test',<% if (props.useKarma) { %> 'karma:unit' <% } else { %> 'jasmine_node:test'<% } %>]);
-    grunt.registerTask('cover', ['clean:coverage', 'jshint:test', <% if (props.useKarma) { %> 'karma:coverage' <% } else { %> 'bgShell:coverage'<% } %>, 'open:coverage']);
+    grunt.registerTask('cover', ['clean:coverage', 'jshint:test', <% if (props.useKarma) { %> 'karma:coverage' <% } else { %> 'bgShell:coverage'<% } %>, 'open:coverage']);<% if (props.useKarma) { %>
+    grunt.registerTask('debug', ['karma:debug']);<% } %>
     grunt.registerTask('ci', ['clean:ci', 'jshint:jslint', 'jshint:checkstyle',<% if (props.useKarma) { %> 'karma:ci', 'karma:coverage', 'karma:cobertura' <% } else { %> 'jasmine_node:ci', 'bgShell:coverage', 'bgShell:cobertura'<% } %>]);
     grunt.registerTask('release', 'Bump version, update changelog and tag version', function (version) {
         grunt.task.run([
@@ -158,6 +204,8 @@ module.exports = function (grunt) {
             'bump-commit'
         ]);
     });
+
+    <% if (isBowerPackage && props.useAngular) { %>grunt.registerTask('build', ['clean:tmp', 'concat', 'ngmin', 'uglify']);<% } else if (isBowerPackage) { %>grunt.registerTask('build', ['clean:tmp', 'concat', 'uglify']);<% } %>
 
     // Default task.
     grunt.registerTask('default', ['test']);
