@@ -1,0 +1,37 @@
+{
+    "name": "<%= slugname %>",
+    "version": "0.0.0",
+    "description": "<%= props.description %>",<% if (props.homepage) { %>
+    "homepage": "<%= props.homepage %>",<%}%>
+    "author": {
+        "name": "<%= props.authorName %>",
+        "email": "<%= props.authorEmail %>"<% if (props.authorUrl) { %>,
+        "url": "<%= props.authorUrl %>"<% } %>
+    },
+    "maintainers": [<% for (var i=0;i<maintainers.length;i++) { %>
+        "<%= maintainers[i], %>"<% } %>
+    ],
+    "license": "<%= props.license %>",<% if (props.license === "MIT") { %>
+    "keywords": [
+        "<%= slugname %>"<% for (var i=0;i<keywords.length;i++) { %>,
+        "<%= keywords[i] %>"<% } %>
+    ],
+    "ignore": [
+        ".*",
+        "bower_components",
+        "CHANGELOG.md",
+        "Gruntfile.js",
+        "lib",
+        "LICENSE"
+        "node_modules",
+        "package.json",
+        "test",
+        "validate-commit-msg.js"
+    ],
+    "dependencies": {<% if (props.useAngular) { %>
+        "angular": "1.2.18"<% } %>
+    },
+    "devDependencies": {<% if (props.useAngular) { %>
+        "angular-mocks": "1.2.18"<% } %>
+    }
+}
