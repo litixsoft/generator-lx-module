@@ -4,7 +4,8 @@
 > A [Yeoman](http://yeoman.io) generator for a Node.js/bower module, including tests.
 
 ## Installation
-Install the generator by running: `npm install -g generator-lx-module`.
+
+    $ npm install -g generator-lx-module
 
 ## Usage
 At the command-line, cd into an empty directory, run this command and follow the prompts.

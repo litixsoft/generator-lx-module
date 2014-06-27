@@ -155,7 +155,7 @@ module.exports = yeoman.generators.Base.extend({
                 },
                 {
                     name: 'useAngular',
-                    message: 'Do you use angular?',
+                    message: 'Do you use AngularJS?',
                     type: 'confirm',
                     default: true,
                     when: function () {
@@ -164,7 +164,7 @@ module.exports = yeoman.generators.Base.extend({
                 },
                 {
                     name: 'useKarma',
-                    message: 'Do you use karma unit tests?',
+                    message: 'Do you use Karma test runner?',
                     type: 'confirm',
                     default: true,
                     when: function () {
