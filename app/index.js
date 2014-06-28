@@ -202,7 +202,7 @@ module.exports = yeoman.generators.Base.extend({
         this.copy('gitignore', '.gitignore');
         this.copy('jshintrc', '.jshintrc');
         this.copy('CHANGELOG.md', 'CHANGELOG.md');
-        this.copy('validate-commit-msg.js', 'validate-commit-msg.js');
+        this.copy('_validate-commit-msg.js', 'validate-commit-msg.js');
 
         if (this.props.license === 'MIT') {
             this.template('_LICENSE', 'LICENSE');
