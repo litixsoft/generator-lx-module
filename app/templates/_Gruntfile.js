@@ -200,7 +200,8 @@ module.exports = function (grunt) {
     grunt.registerTask('ci', ['clean:ci', 'jshint:jslint', 'jshint:checkstyle',<% if (props.useKarma) { %> 'karma:ci', 'karma:coverage', 'karma:cobertura' <% } else { %> 'jasmine_node:ci', 'bgShell:coverage', 'bgShell:cobertura'<% } %>]);
     grunt.registerTask('release', 'Bump version, update changelog and tag version', function (version) {
         grunt.task.run([
-            'bump:' + (version || 'patch') + ':bump-only',
+            'bump:' + (version || 'patch') + ':bump-only',<% if (isBowerPackage) { %>
+            'build',<% } %>
             'changelog',
             'bump-commit'
         ]);
