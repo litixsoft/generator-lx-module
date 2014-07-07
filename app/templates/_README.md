@@ -1,8 +1,5 @@
 # <%= slugname %>
-[![Build Status](https://secure.travis-ci.org/<%= props.githubUsername %>/<%= slugname %>.svg?branch=master)](https://travis-ci.org/<%= props.githubUsername %>/<%= slugname %>)
-<% if (isNpmPackage) { %>[![NPM version](https://badge.fury.io/js/<%= slugname %>.svg)](http://badge.fury.io/js/<%= slugname %>)<% } %>
-<% if (isBowerPackage) { %>[![Bower version](https://badge.fury.io/bo/<%= slugname %>.svg)](http://badge.fury.io/bo/<%= slugname %>)<% } %>
-[![david-dm](https://david-dm.org/<%= props.githubUsername %>/<%= slugname %>.svg?theme=shields.io)](https://david-dm.org/<%= props.githubUsername %>/<%= slugname %>/)
+[![Build Status](https://secure.travis-ci.org/<%= props.githubUsername %>/<%= slugname %>.svg?branch=master)](https://travis-ci.org/<%= props.githubUsername %>/<%= slugname %>) <% if (isNpmPackage) { %>[![NPM version](https://badge.fury.io/js/<%= slugname %>.svg)](http://badge.fury.io/js/<%= slugname %>)<% } %> <% if (isBowerPackage) { %>[![Bower version](https://badge.fury.io/bo/<%= slugname %>.svg)](http://badge.fury.io/bo/<%= slugname %>)<% } %> [![david-dm](https://david-dm.org/<%= props.githubUsername %>/<%= slugname %>.svg?theme=shields.io)](https://david-dm.org/<%= props.githubUsername %>/<%= slugname %>/)
 [![david-dm](https://david-dm.org/<%= props.githubUsername %>/<%= slugname %>/dev-status.svg?theme=shields.io)](https://david-dm.org/<%= props.githubUsername %>/<%= slugname %>#info=devDependencies&view=table)
 
 > <%= props.description %>
