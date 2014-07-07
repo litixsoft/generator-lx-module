@@ -1,5 +1,8 @@
 # generator-lx-module
-[![Build Status](https://secure.travis-ci.org/litixsoft/generator-lx-module.svg?branch=master)](https://travis-ci.org/litixsoft/generator-lx-module) [![david-dm](https://david-dm.org/litixsoft/generator-lx-module.svg?theme=shields.io)](https://david-dm.org/litixsoft/generator-lx-module/) [![david-dm](https://david-dm.org/litixsoft/generator-lx-module/dev-status.svg?theme=shields.io)](https://david-dm.org/litixsoft/generator-lx-module#info=devDependencies&view=table) [![npm](http://img.shields.io/npm/v/generator-lx-module.svg)](https://www.npmjs.org/package/generator-lx-module)
+[![Build Status](https://secure.travis-ci.org/litixsoft/generator-lx-module.svg?branch=master)](https://travis-ci.org/litixsoft/generator-lx-module)
+[![david-dm](https://david-dm.org/litixsoft/generator-lx-module.svg?theme=shields.io)](https://david-dm.org/litixsoft/generator-lx-module/)
+[![david-dm](https://david-dm.org/litixsoft/generator-lx-module/dev-status.svg?theme=shields.io)](https://david-dm.org/litixsoft/generator-lx-module#info=devDependencies&view=table)
+[![NPM version](https://badge.fury.io/js/generator-lx-module.svg)](http://badge.fury.io/js/generator-lx-module)
 
 > A [Yeoman](http://yeoman.io) generator for a Node.js/bower module, including tests.
 
