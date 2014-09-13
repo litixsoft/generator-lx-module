@@ -26,7 +26,7 @@ module.exports = function (grunt) {
 
     // Project configuration.
     grunt.initConfig({
-        jshintFiles: ['Gruntfile.js', <% if (isNpmPackage) { %>'lib/**/*.js', 'test/**/*.js'<% } %>],
+        jshintFiles: ['Gruntfile.js'<% if (isNpmPackage) { %>, 'lib/**/*.js', 'test/**/*.js'<% } %>],
         pkg: grunt.file.readJSON('package.json'),<% if (isBowerPackage) { %>
         banner: '/*!\n' +
             ' * <%%= pkg.title || pkg.name %> - v<%%= pkg.version %> - <%%= grunt.template.today("yyyy-mm-dd") %>\n' +
@@ -71,10 +71,15 @@ module.exports = function (grunt) {
                 dest: '<%%= pkg.name %>.min.js'
             }
         },<% } %><% if (props.useAngular) { %>
-        ngmin: {
+        ngAnnotate: {
+            options: {
+                singleQuotes: true
+            },
             dist: {
                 files: [
                 {
+                    //expand: true,
+                    //cwd: '.tmp/concat/scripts',
                     src: ['<%%= pkg.name %>.js'],
                     dest: '.tmp/<%%= pkg.name %>.js'
                 }]
@@ -207,7 +212,7 @@ module.exports = function (grunt) {
         ]);
     });
 
-    <% if (isBowerPackage && props.useAngular) { %>grunt.registerTask('build', ['clean:tmp', 'concat', 'ngmin', 'uglify']);<% } else if (isBowerPackage) { %>grunt.registerTask('build', ['clean:tmp', 'concat', 'uglify']);<% } %>
+    <% if (isBowerPackage && props.useAngular) { %>grunt.registerTask('build', ['clean:tmp', 'concat', 'ngAnnotate', 'uglify']);<% } else if (isBowerPackage) { %>grunt.registerTask('build', ['clean:tmp', 'concat', 'uglify']);<% } %>
 
     // Default task.
     grunt.registerTask('default', ['test']);
