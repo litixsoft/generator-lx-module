@@ -1,3 +1,12 @@
+<a name="0.1.3"></a>
+### 0.1.3 (2014-09-13)
+
+
+#### Features
+
+* replace ngmin with ng-annotate ([6890cead](https://github.com/litixsoft/generator-lx-module/commit/6890ceadca3278ea353ab92a7d2367109fb51a37))
+
+
 <a name="0.1.2"></a>
 ### 0.1.2 (2014-09-13)
 
