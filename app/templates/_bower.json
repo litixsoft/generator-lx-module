@@ -31,9 +31,9 @@
         "validate-commit-msg.js"
     ],
     "dependencies": {<% if (props.useAngular) { %>
-        "angular": "1.2.19"<% } %>
+        "angular": "1.2.24"<% } %>
     },
     "devDependencies": {<% if (props.useAngular) { %>
-        "angular-mocks": "1.2.19"<% } %>
+        "angular-mocks": "1.2.24"<% } %>
     }
 }
