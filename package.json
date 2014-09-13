@@ -1,6 +1,6 @@
 {
     "name": "generator-lx-module",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Yeoman generator for creating a node.js/bower module, including tests",
     "homepage": "https://github.com/litixsoft/generator-lx-module",
     "author": "Litixsoft GmbH <info@litixsoft.de> (http://www.litixsoft.de)",
