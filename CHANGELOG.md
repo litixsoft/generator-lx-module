@@ -1,3 +1,12 @@
+<a name="0.1.4"></a>
+### 0.1.4 (2014-12-16)
+
+
+#### Features
+
+* update to latest angular.js version ([7ecfa1a9](https://github.com/litixsoft/generator-lx-module/commit/7ecfa1a9ea84522040ccd0c4a5da74ad35da6897))
+
+
 <a name="0.1.3"></a>
 ### 0.1.3 (2014-09-13)
 
