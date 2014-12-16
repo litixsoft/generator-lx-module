@@ -41,7 +41,7 @@ module.exports = yeoman.generators.Base.extend({
                         'bower',
                         'both'
                     ],
-                    default: 'bower'
+                    default: 'both'
                 }
             ];
 
@@ -69,12 +69,12 @@ module.exports = yeoman.generators.Base.extend({
                     message: 'The name above already exists on npm, choose another?',
                     default: true,
                     when: function (answers) {
-                        var done = this.async();
+                        var done2 = this.async();
 
                         if (self.isNpmPackage) {
-                            nameIsAvailableOnNpm(answers.name, done);
+                            nameIsAvailableOnNpm(answers.name, done2);
                         } else {
-                            done();
+                            done2();
                         }
                     }
                 },
@@ -84,12 +84,12 @@ module.exports = yeoman.generators.Base.extend({
                     message: 'The name above already exists on bower, choose another?',
                     default: true,
                     when: function (answers) {
-                        var done = this.async();
+                        var done2 = this.async();
 
                         if (self.isBowerPackage) {
-                            nameIsAvailableOnBower(answers.name, done);
+                            nameIsAvailableOnBower(answers.name, done2);
                         } else {
-                            done();
+                            done2();
                         }
                     }
                 }
@@ -104,7 +104,9 @@ module.exports = yeoman.generators.Base.extend({
                 this.slugname = this._.slugify(answers.name);
                 this.safeSlugname = this.slugname.replace(
                     /-+([a-zA-Z0-9])/g,
-                    function (g) { return g[1].toUpperCase(); }
+                    function (g) {
+                        return g[1].toUpperCase();
+                    }
                 );
 
                 done();
@@ -200,7 +202,7 @@ module.exports = yeoman.generators.Base.extend({
         this.copy('editorconfig', '.editorconfig');
         this.copy('gitattributes', '.gitattributes');
         this.copy('gitignore', '.gitignore');
-        this.copy('jshintrc', '.jshintrc');
+        this.copy('eslintrc', '.eslintrc');
         this.copy('CHANGELOG.md', 'CHANGELOG.md');
         this.copy('_validate-commit-msg.js', 'validate-commit-msg.js');
 
@@ -239,10 +241,8 @@ module.exports = yeoman.generators.Base.extend({
             this.template('test/_karma.coverage.conf.js', 'test/karma.coverage.conf.js');
             this.template('test/_karma.webstorm.conf.js', 'test/karma.webstorm.conf.js');
             this.template('test/_karma.spec.js', 'test/' + this.slugname + '.spec.js');
-        } else {
-            if (this.isNpmPackage) {
-                this.template('test/_lib.spec.js', 'test/' + this.slugname + '.spec.js');
-            }
+        } else if (this.isNpmPackage) {
+            this.template('test/_lib.spec.js', 'test/' + this.slugname + '.spec.js');
         }
     },
 

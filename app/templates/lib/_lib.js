@@ -13,7 +13,7 @@
     exports.awesome = function() {
         return 'awesome';
     };
-})(typeof(module) !== undefined && module.exports !== undefined ? module.exports : (window.<%= safeSlugname %> = window.<%= safeSlugname %> || {}));<% } else { %>
+})(typeof module !== undefined && module.exports !== undefined ? module.exports : window.<%= safeSlugname %> = window.<%= safeSlugname %> || {});<% } else { %>
 'use strict';
 
 module.exports.awesome = function() {

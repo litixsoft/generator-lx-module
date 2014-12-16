@@ -85,15 +85,12 @@ module.exports = function (grunt) {
                 }]
             }
         },<% } %>
-        jshint: {
-            options: {
-                jshintrc: true
-            },
-            test: '<%%= jshintFiles %>',
+        eslint: {
+            all: '<%%= jshintFiles %>',
             jslint: {
                 options: {
                     reporter: 'jslint',
-                    reporterOutput: 'build/reports/lint/jshint.xml'
+                    reporterOutput: 'build/reports/lint/eslint.xml'
                 },
                 files: {
                     src: '<%%= jshintFiles %>'
@@ -102,7 +99,7 @@ module.exports = function (grunt) {
             checkstyle: {
                 options: {
                     reporter: 'checkstyle',
-                    reporterOutput: 'build/reports/lint/jshint_checkstyle.xml'
+                    reporterOutput: 'build/reports/lint/eslint_checkstyle.xml'
                 },
                 files: {
                     src: '<%%= jshintFiles %>'
@@ -182,7 +179,7 @@ module.exports = function (grunt) {
         },
         bump: {
             options: {
-                files: ['package.json' <% if (isBowerPackage) { %>, 'bower.json'<% } %>],
+                files: ['package.json'<% if (isBowerPackage) { %>, 'bower.json'<% } %>],
                 updateConfigs: ['pkg'],
                 commitFiles: ['.'],
                 commitMessage: 'chore: release v%VERSION%',
@@ -198,11 +195,11 @@ module.exports = function (grunt) {
         grunt.log.ok('Registered git hook: commit-msg');
     });
 
-    grunt.registerTask('lint', ['jshint:test']);
-    grunt.registerTask('test', ['git:commitHook', 'clean:jasmine', 'jshint:test',<% if (props.useKarma) { %> 'karma:unit' <% } else { %> 'jasmine_node:test'<% } %>]);
-    grunt.registerTask('cover', ['clean:coverage', 'jshint:test', <% if (props.useKarma) { %> 'karma:coverage' <% } else { %> 'bgShell:coverage'<% } %>, 'open:coverage']);<% if (props.useKarma) { %>
+    grunt.registerTask('lint', ['eslint:all']);
+    grunt.registerTask('test', ['git:commitHook', 'clean:jasmine', 'eslint:all',<% if (props.useKarma) { %> 'karma:unit' <% } else { %> 'jasmine_node:test'<% } %>]);
+    grunt.registerTask('cover', ['clean:coverage', 'eslint:all',<% if (props.useKarma) { %> 'karma:coverage'<% } else { %> 'bgShell:coverage'<% } %>, 'open:coverage']);<% if (props.useKarma) { %>
     grunt.registerTask('debug', ['karma:debug']);<% } %>
-    grunt.registerTask('ci', ['clean:ci', 'jshint:jslint', 'jshint:checkstyle',<% if (props.useKarma) { %> 'karma:ci', 'karma:coverage', 'karma:cobertura' <% } else { %> 'jasmine_node:ci', 'bgShell:coverage', 'bgShell:cobertura'<% } %>]);
+    grunt.registerTask('ci', ['clean:ci', 'eslint:jslint', 'eslint:checkstyle',<% if (props.useKarma) { %> 'karma:ci', 'karma:coverage', 'karma:cobertura' <% } else { %> 'jasmine_node:ci', 'bgShell:coverage', 'bgShell:cobertura'<% } %>]);
     grunt.registerTask('release', 'Bump version, update changelog and tag version', function (version) {
         grunt.task.run([
             'bump:' + (version || 'patch') + ':bump-only',<% if (isBowerPackage) { %>
@@ -211,8 +208,7 @@ module.exports = function (grunt) {
             'bump-commit'
         ]);
     });
-
-    <% if (isBowerPackage && props.useAngular) { %>grunt.registerTask('build', ['clean:tmp', 'concat', 'ngAnnotate', 'uglify']);<% } else if (isBowerPackage) { %>grunt.registerTask('build', ['clean:tmp', 'concat', 'uglify']);<% } %>
+<% if (isBowerPackage && props.useAngular) { %>grunt.registerTask('build', ['clean:tmp', 'concat', 'ngAnnotate', 'uglify']);<% } else if (isBowerPackage) { %>grunt.registerTask('build', ['clean:tmp', 'concat', 'uglify']);<% } %>
 
     // Default task.
     grunt.registerTask('default', ['test']);

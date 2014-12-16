@@ -45,24 +45,25 @@
     "devDependencies": {
         "grunt": "^0.4.5",
         "grunt-bg-shell": "^2.3.1",
-        "grunt-bump": "^0.0.15",
+        "grunt-bump": "^0.0.16",
         "grunt-contrib-clean": "^0.6.0",<% if (isBowerPackage) { %>
-        "grunt-contrib-concat": "^0.5.0",<% } %>
-        "grunt-contrib-jshint": "^0.10.0",<% if (isBowerPackage) { %>
-        "grunt-contrib-uglify": "^0.5.1",<% } %>
-        "grunt-conventional-changelog": "^1.1.0",<% if (isNpmPackage) { %>
+        "grunt-contrib-concat": "^0.5.0",<% } %><% if (isBowerPackage) { %>
+        "grunt-contrib-uglify": "^0.6.0",<% } %>
+        "grunt-conventional-changelog": "^1.1.0",
+        "grunt-eslint": "^2.1.0",<% if (isNpmPackage) { %>
         "grunt-jasmine-node": "^0.2.1",<% } %><% if (props.useKarma) { %>
         "grunt-karma": "^0.9.0",<% } %><% if (props.useAngular) { %>
-        "grunt-ng-annotate": "^0.3.2",<% } %>
+        "grunt-ng-annotate": "^0.8.0",<% } %>
         "grunt-open": "^0.2.3",
-        "grunt-release": "^0.7.0",<% if (isNpmPackage) { %>
-        "istanbul": "^0.3.2",<% } %><% if (props.useKarma) { %>
+        "grunt-release": "^0.9.0",<% if (isNpmPackage) { %>
+        "istanbul": "^0.3.5",<% } %><% if (props.useKarma) { %>
+        "jasmine-core": "^2.1.3",
         "karma-detect-browsers": "*",
         "karma-coverage": "*",
-        "karma-jasmine": "^0.2.2",
+        "karma-jasmine": "^0.3.2",
         "karma-junit-reporter": "*",
         "karma-mocha-reporter": "*",<% } %>
-        "load-grunt-tasks": "^0.6.0",
+        "load-grunt-tasks": "^1.0.0",
         "time-grunt": "^1.0.0"
     }
 }
