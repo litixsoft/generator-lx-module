@@ -1,3 +1,12 @@
+<a name="0.1.5"></a>
+### 0.1.5 (2014-12-17)
+
+
+#### Bug Fixes
+
+* improve handling of maintainers prompt ([a0bdc4c7](https://github.com/litixsoft/generator-lx-module/commit/a0bdc4c7db0a9ab7f49938fede907abb5198c166))
+
+
 <a name="0.1.4"></a>
 ### 0.1.4 (2014-12-16)
 
