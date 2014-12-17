@@ -9,7 +9,7 @@
         "url": "<%= props.authorUrl %>"<% } %>
     },
     "maintainers": [<% for (var i = 0; i < maintainers.length; i++) { %>
-        "<%= maintainers[i] %>"<% } %>
+        "<%= maintainers[i] %>"<% if (i < (maintainers.length - 1)) { %>,<% } %><% } %>
     ],
     "license": "<%= props.license %>",
     "keywords": [

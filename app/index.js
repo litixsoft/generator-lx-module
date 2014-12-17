@@ -190,8 +190,13 @@ module.exports = yeoman.generators.Base.extend({
                     answers.homepage = this.repoUrl;
                 }
 
-                this.keywords = answers.keywords.split(',');
-                this.maintainers = answers.maintainers.split(',');
+                this.keywords = (answers.keywords || '').split(',').map(function (item) {
+                    return item.trim();
+                });
+
+                this.maintainers = (answers.maintainers || '').split(',').map(function (item) {
+                    return item.trim();
+                });
 
                 done();
             }.bind(this));
