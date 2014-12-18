@@ -43,7 +43,7 @@ module.exports = function (grunt) {
                 cmd: 'cd demo && node ../node_modules/npm-check-updates/bin/npm-check-updates'
             },
             run_tests: {
-                cmd: 'cd demo && grunt test'
+                cmd: 'cd demo && grunt test --force && grunt ci --force'
             },
             link: {
                 cmd: 'npm link'

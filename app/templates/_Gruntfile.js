@@ -89,8 +89,8 @@ module.exports = function (grunt) {
             all: '<%%= jshintFiles %>',
             jslint: {
                 options: {
-                    reporter: 'jslint',
-                    reporterOutput: 'build/reports/lint/eslint.xml'
+                    format: 'jslint-xml',
+                    'output-file': 'build/reports/lint/eslint.xml'
                 },
                 files: {
                     src: '<%%= jshintFiles %>'
@@ -98,8 +98,8 @@ module.exports = function (grunt) {
             },
             checkstyle: {
                 options: {
-                    reporter: 'checkstyle',
-                    reporterOutput: 'build/reports/lint/eslint_checkstyle.xml'
+                    format: 'checkstyle',
+                    'output-file': 'build/reports/lint/eslint_checkstyle.xml'
                 },
                 files: {
                     src: '<%%= jshintFiles %>'
