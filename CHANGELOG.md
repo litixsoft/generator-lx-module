@@ -1,3 +1,12 @@
+<a name="0.1.6"></a>
+### 0.1.6 (2014-12-18)
+
+
+#### Bug Fixes
+
+* correct eslint settings in Gruntfile ([e84c1af5](https://github.com/litixsoft/generator-lx-module/commit/e84c1af528816a42b21028f633d6f59c70144aca))
+
+
 <a name="0.1.5"></a>
 ### 0.1.5 (2014-12-17)
 
