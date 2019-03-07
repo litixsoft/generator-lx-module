@@ -1,3 +1,6 @@
+    Project is deprecated. No continue development, no bugfixing anymore.
+---
+
 # generator-lx-module
 > A [Yeoman](http://yeoman.io) generator for a Node.js/bower module, including tests.
 
